@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+  <parent>
+    <groupId>at.molindo</groupId>
+    <artifactId>molindo-elasticsync</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+
+  <properties>
+    <bundle.symbolicName>at.molindo.elasticsync.scrutineer</bundle.symbolicName>
+    <bundle.namespace>at.molindo.elasticsync.scrutineer</bundle.namespace>
+  </properties>
+
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>at.molindo.elasticsync</groupId>
+  <artifactId>at.molindo.elasticsync.scrutineer</artifactId>
+
+  <name>${bundle.symbolicName}</name>
+
+  <packaging>bundle</packaging>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-bundle-plugin</artifactId>
+				<configuration>
+					<instructions>
+						<Private-Package>${bundle.namespace}.internal.*</Private-Package>
+						<Import-Package>at.molindo.elasticsync.api, org.slf4j, org.osgi.*, javax.*</Import-Package>
+						<Embed-Transitive>true</Embed-Transitive>
+						<Embed-Dependency>*;scope=compile|runtime;inline=false</Embed-Dependency>
+					</instructions>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.osgi</groupId>
+			<artifactId>org.osgi.core</artifactId>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.osgi</groupId>
+			<artifactId>org.osgi.compendium</artifactId>
+			<optional>true</optional>
+		</dependency>
+	
+		<dependency>
+			<groupId>at.molindo.elasticsync</groupId>
+			<artifactId>at.molindo.elasticsync.api</artifactId>
+			<scope>provided</scope>
+			<optional>true</optional>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.fasterxml.util</groupId>
+			<artifactId>java-merge-sort</artifactId>
+			<version>0.7.1</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<version>2.4</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>r06</version>
+		</dependency>
+			
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+</project>
