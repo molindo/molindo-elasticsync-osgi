@@ -1,15 +1,15 @@
-package at.molindo.elasticsync.es020.internal;
+package at.molindo.elasticsync.es090.internal;
 
 import at.molindo.elasticsync.api.ElasticsearchIndex;
-import at.molindo.elasticsync.api.ElasticSearchIndexFactory;
+import at.molindo.elasticsync.api.ElasticsearchIndexFactory;
 import at.molindo.elasticsync.api.IdAndVersionFactory;
 import at.molindo.elasticsync.api.Index;
 
-public class ElasticSearch020IndexFactory implements
-		ElasticSearchIndexFactory {
+public class Elasticsearch090IndexFactory implements
+		ElasticsearchIndexFactory {
 
 	@Override
-	public ElasticsearchIndex createDownloader(Index index, String query,
+	public ElasticsearchIndex createElasticsearchIndex(Index index, String query,
 			IdAndVersionFactory factory) {
 
 		if (!isVersionSupported(index.getVersion())) {
@@ -17,7 +17,7 @@ public class ElasticSearch020IndexFactory implements
 					"factory not suited for version " + index.getVersion());
 		}
 
-		return new Elasticsearch020Index(
+		return new Elasticsearch090Index(
 				ClientFactory.newTransportClient(index.getHosts()),
 				index.getIndexName(), query, factory);
 	}

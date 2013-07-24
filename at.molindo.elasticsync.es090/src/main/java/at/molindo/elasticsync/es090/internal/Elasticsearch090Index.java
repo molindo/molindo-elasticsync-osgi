@@ -32,7 +32,7 @@ import org.elasticsearch.index.query.QueryStringQueryBuilder;
 import org.elasticsearch.search.SearchHit;
 import org.slf4j.Logger;
 
-public class ElasticSearch090Index implements ElasticsearchIndex {
+public class Elasticsearch090Index implements ElasticsearchIndex {
 
 	private static final Logger LOG = LogUtils.loggerForThisClass();
 
@@ -45,7 +45,7 @@ public class ElasticSearch090Index implements ElasticsearchIndex {
 	private final String query;
 	private final IdAndVersionFactory idAndVersionFactory;
 
-	public ElasticSearch090Index(Client client, String indexName, String query, IdAndVersionFactory idAndVersionFactory) {
+	public Elasticsearch090Index(Client client, String indexName, String query, IdAndVersionFactory idAndVersionFactory) {
 		this.client = client;
 		this.indexName = indexName;
 		this.query = query;

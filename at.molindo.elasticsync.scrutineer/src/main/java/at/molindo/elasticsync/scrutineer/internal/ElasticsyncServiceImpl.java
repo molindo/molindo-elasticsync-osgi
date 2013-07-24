@@ -9,7 +9,7 @@ import org.osgi.util.tracker.ServiceTracker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import at.molindo.elasticsync.api.ElasticSearchIndexFactory;
+import at.molindo.elasticsync.api.ElasticsearchIndexFactory;
 import at.molindo.elasticsync.api.ElasticsearchIndex;
 import at.molindo.elasticsync.api.ElasticsyncService;
 import at.molindo.elasticsync.api.Index;
@@ -21,7 +21,7 @@ public class ElasticsyncServiceImpl implements ElasticsyncService {
 	private static final Logger log = LoggerFactory
 			.getLogger(ElasticsyncServiceImpl.class);
 	
-	private ServiceTracker<ElasticSearchIndexFactory, ElasticSearchIndexFactory> _tracker;
+	private ServiceTracker<ElasticsearchIndexFactory, ElasticsearchIndexFactory> _tracker;
 
 	private BundleContext _context;
 	
@@ -35,16 +35,16 @@ public class ElasticsyncServiceImpl implements ElasticsyncService {
 	@Override
 	public void verify(Index source, Index target, List<String> types, String query, boolean update) {
 
-		ServiceTracker<ElasticSearchIndexFactory, ElasticSearchIndexFactory> sourceFactoryTracker = findFactoryTracker(source.getVersion());
-		ServiceTracker<ElasticSearchIndexFactory, ElasticSearchIndexFactory> targetFactoryTracker = findFactoryTracker(target.getVersion());
+		ServiceTracker<ElasticsearchIndexFactory, ElasticsearchIndexFactory> sourceFactoryTracker = findFactoryTracker(source.getVersion());
+		ServiceTracker<ElasticsearchIndexFactory, ElasticsearchIndexFactory> targetFactoryTracker = findFactoryTracker(target.getVersion());
 
 		try {
-			ElasticSearchIndexFactory sourceFactory = getService(sourceFactoryTracker, source.getVersion());
-			ElasticSearchIndexFactory targetFactory = getService(targetFactoryTracker, target.getVersion());
+			ElasticsearchIndexFactory sourceFactory = getService(sourceFactoryTracker, source.getVersion());
+			ElasticsearchIndexFactory targetFactory = getService(targetFactoryTracker, target.getVersion());
 			
 			try (
-				ElasticsearchIndex sourceIndex = sourceFactory.createDownloader(source, query, StringIdAndVersionFactory.INSTANCE);
-				ElasticsearchIndex targetIndex = targetFactory.createDownloader(target, query, StringIdAndVersionFactory.INSTANCE);
+				ElasticsearchIndex sourceIndex = sourceFactory.createElasticsearchIndex(source, query, StringIdAndVersionFactory.INSTANCE);
+				ElasticsearchIndex targetIndex = targetFactory.createElasticsearchIndex(target, query, StringIdAndVersionFactory.INSTANCE);
 			){
 				log.info("starting verification");
 				try (
@@ -62,9 +62,9 @@ public class ElasticsyncServiceImpl implements ElasticsyncService {
 		}
 	}
 
-	private ElasticSearchIndexFactory getService(ServiceTracker<ElasticSearchIndexFactory, ElasticSearchIndexFactory> tracker, String version) {
+	private ElasticsearchIndexFactory getService(ServiceTracker<ElasticsearchIndexFactory, ElasticsearchIndexFactory> tracker, String version) {
 
-		ElasticSearchIndexFactory factory = tracker.getService();
+		ElasticsearchIndexFactory factory = tracker.getService();
 		if (factory == null) {
 			log.info("waiting on factory for Elasticsearch version {}", version);
 			try {
@@ -90,10 +90,10 @@ public class ElasticsyncServiceImpl implements ElasticsyncService {
 		}
 	}
 
-	private ServiceTracker<ElasticSearchIndexFactory, ElasticSearchIndexFactory> findFactoryTracker(String version) {
+	private ServiceTracker<ElasticsearchIndexFactory, ElasticsearchIndexFactory> findFactoryTracker(String version) {
 		try {
-			String filter = "(&(" + Constants.OBJECTCLASS + "="+ElasticSearchIndexFactory.class.getName()+")("+ElasticSearchIndexFactory.ELASTICSEARCH_VERSION_PROPERTY+"="+version+"))";
-			ServiceTracker<ElasticSearchIndexFactory, ElasticSearchIndexFactory> tracker = new ServiceTracker<>(_context, _context.createFilter(filter), null);
+			String filter = "(&(" + Constants.OBJECTCLASS + "="+ElasticsearchIndexFactory.class.getName()+")("+ElasticsearchIndexFactory.ELASTICSEARCH_VERSION_PROPERTY+"="+version+"))";
+			ServiceTracker<ElasticsearchIndexFactory, ElasticsearchIndexFactory> tracker = new ServiceTracker<>(_context, _context.createFilter(filter), null);
 			tracker.open();
 			return tracker;
 		} catch (InvalidSyntaxException e) {

@@ -3,12 +3,12 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.osgi.org/xmlns/blueprint/v1.0.0 http://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd">
 
-	<bean id="elasticSearch020IndexFactory" class="at.molindo.elasticsync.es020.internal.ElasticSearch020IndexFactory" />
+	<bean id="elasticsearch020IndexFactory" class="at.molindo.elasticsync.es020.internal.Elasticsearch020IndexFactory" />
 
-	<service id="elasticSearch020IndexFactoryService" interface="at.molindo.elasticsync.api.ElasticSearchIndexFactory" ref="elasticSearch020IndexFactory">
+	<service id="elasticsearch020IndexFactoryService" interface="at.molindo.elasticsync.api.ElasticsearchIndexFactory" ref="elasticsearch020IndexFactory">
 		<service-properties>
 			<entry key="elasticsearch.version">
-				<bean factory-ref="elasticSearch020IndexFactory" factory-method="getVersion" />
+				<bean factory-ref="elasticsearch020IndexFactory" factory-method="getVersion" />
 			</entry>
 		</service-properties>
 	</service>

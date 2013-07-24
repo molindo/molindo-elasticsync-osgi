@@ -8,11 +8,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import at.molindo.elasticsync.api.Document;
-import at.molindo.elasticsync.api.ElasticsearchIndex;
-import at.molindo.elasticsync.api.IdAndVersionFactory;
-import at.molindo.elasticsync.api.LogUtils;
-
 import org.elasticsearch.action.ActionListener;
 import org.elasticsearch.action.bulk.BulkItemResponse;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
@@ -31,6 +26,11 @@ import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.query.QueryStringQueryBuilder;
 import org.elasticsearch.search.SearchHit;
 import org.slf4j.Logger;
+
+import at.molindo.elasticsync.api.Document;
+import at.molindo.elasticsync.api.ElasticsearchIndex;
+import at.molindo.elasticsync.api.IdAndVersionFactory;
+import at.molindo.elasticsync.api.LogUtils;
 
 public class Elasticsearch020Index implements ElasticsearchIndex {
 
