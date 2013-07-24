@@ -2,7 +2,6 @@ package at.molindo.elasticsync.api;
 
 import java.io.OutputStream;
 import java.util.List;
-import java.util.Map;
 
 public interface ElasticsearchIndex extends AutoCloseable {
 

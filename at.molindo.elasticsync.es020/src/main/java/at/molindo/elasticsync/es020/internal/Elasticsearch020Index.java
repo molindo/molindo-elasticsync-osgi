@@ -34,7 +34,7 @@ import at.molindo.elasticsync.api.LogUtils;
 
 public class Elasticsearch020Index implements ElasticsearchIndex {
 
-    private static final Logger LOG = LogUtils.loggerForThisClass();
+	private static final Logger LOG = LogUtils.loggerForThisClass();
 
     static final int BATCH_SIZE = 100000;
     static final int SCROLL_TIME_IN_MINUTES = 10;
@@ -61,6 +61,7 @@ public class Elasticsearch020Index implements ElasticsearchIndex {
         long begin = System.currentTimeMillis();
         doDownloadTo(type, outputStream);
         LogUtils.infoTimeTaken(LOG, begin, numItems, "Scan & Download completed");
+        numItems = 0;
     }
 
     private void doDownloadTo(String type, OutputStream outputStream) {

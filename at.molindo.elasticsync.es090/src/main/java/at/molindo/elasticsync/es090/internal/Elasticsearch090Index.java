@@ -61,6 +61,7 @@ public class Elasticsearch090Index implements ElasticsearchIndex {
 		long begin = System.currentTimeMillis();
 		doDownloadTo(type, outputStream);
 		LogUtils.infoTimeTaken(LOG, begin, numItems, "Scan & Download completed");
+        numItems = 0;
 	}
 
 	private void doDownloadTo(String type, OutputStream outputStream) {
