@@ -5,6 +5,8 @@ import java.util.List;
 
 public class Index {
 
+	public static final int DEFAULT_PORT = 9300;
+	
 	private List<String> _hosts;
 	private String _indexName;
 	private String _version;

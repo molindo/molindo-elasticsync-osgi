@@ -175,7 +175,14 @@ public class Launcher {
 
 	private static ElasticsyncCommandLineOptions parseOptions(String[] args) {
 		ElasticsyncCommandLineOptions options = new ElasticsyncCommandLineOptions();
-		new JCommander(options, args);
+		JCommander jcmdr = new JCommander(options, args);
+		
+		if (options.help) {
+			jcmdr.setProgramName(Launcher.class.getName());
+			jcmdr.usage();
+			System.exit(0);
+		}
+		
 		return options;
 	}
 	

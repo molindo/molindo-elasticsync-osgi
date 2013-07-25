@@ -8,6 +8,8 @@ import org.elasticsearch.common.settings.ImmutableSettings;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
 
+import at.molindo.elasticsync.api.Index;
+
 public class ClientFactory {
 
 	private ClientFactory() {}
@@ -26,7 +28,7 @@ public class ClientFactory {
     		}
     		
     		String hostPart = parts[0];
-    		int portPart =  parts.length == 1 ? 9200 : Integer.parseInt(parts[1]);
+    		int portPart =  parts.length == 1 ? Index.DEFAULT_PORT : Integer.parseInt(parts[1]);
     		
     		client.addTransportAddress(new InetSocketTransportAddress(hostPart, portPart));
     	}
