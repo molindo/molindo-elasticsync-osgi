@@ -6,7 +6,7 @@ _Attention: raw brain dump ahead_
 molindo-elasticsync is a simple command line tool to synchronize [elasticsearch](http://elasticsearch.org) indices
 regardless of cluster version. It's built with
 
-- [elasticsearch's Java client API (`TransportClient`)](http://www.elasticsearch.org/guide/reference/java-api/)
+- [elasticsearch's Java client API](http://www.elasticsearch.org/guide/reference/java-api/) (`TransportClient`)
 - [Aconex/scrutineer](https://github.com/Aconex/scrutineer)
 - [OSGI](http://en.wikipedia.org/wiki/OSGi)
 
@@ -16,15 +16,18 @@ follows these steps:
 1. create a new cluster
 1. create required indices and mappings
 1. first run of molindo-elasticsync (potentially very slow)
-1. (optionally) next run of molindo-elasticsync (very fast)
 1. switch writing from old cluster to new
-1. next run of molindo-elasticsync (even faster)
+1. next run of molindo-elasticsync (fast)
 1. shutdown old cluster
 
 The first run of molindo-elasticsync writes the complete index. There are other (and faster) ways to do this, but
 you might not want to use yet another tool. Consecutive runs of molindo-elasticsync only write changes. Detecting
-these changes is extemely fast (mainly depending on scan speed). Switching writes over to the new cluster and doing
-a sync afterwards is save due to the versioning. Elasticsearch even keeps versions of deleted documents.
+these changes is extemely fast (mainly depending on scan speed). Indexing changes depends on the amount of changes. You
+might therefore want to run molindo-elasticsync just before switching over to the new cluster to minimize
+incosistencies. Switching writes over to the new cluster and doing a sync afterwards is save due to the versioning.
+Elasticsearch even keeps versions of deleted documents around for some time (`index.gc_deletes`, TODO: verify
+reliability). You should increase this setting to a suitable time before you start the process (available in 0.90.3, see
+[#3396](https://github.com/elasticsearch/elasticsearch/issues/3396)). 
 
 OSGI
 ----
