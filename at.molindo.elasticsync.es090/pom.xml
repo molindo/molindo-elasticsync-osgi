@@ -11,8 +11,8 @@
 		<bundle.symbolicName>at.molindo.elasticsync.es090</bundle.symbolicName>
 		<bundle.namespace>at.molindo.elasticsync.es090</bundle.namespace>
 
-		<elasticsearch.version>0.90.3</elasticsearch.version>
-		<elasticsearch.lucene.version>4.4.0</elasticsearch.lucene.version>
+		<elasticsearch.version>0.90.11</elasticsearch.version>
+		<elasticsearch.lucene.version>4.6.1</elasticsearch.lucene.version>
 		<elasticsearch.jna.version>3.3.0</elasticsearch.jna.version>
 		<spatial.version>0.3</spatial.version>
 		<jts.version>1.12</jts.version>
