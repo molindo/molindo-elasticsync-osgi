@@ -1,29 +1,32 @@
-molindo-elasticsync
-===================
+__work on this project was stopped, use [molindo-elasticsync](https://github.com/molindo/molindo-elasticsync) instead__
+
+molindo-elasticsync-osgi
+========================
+
 
 _Attention: raw brain dump ahead_
 
-molindo-elasticsync is a simple command line tool to synchronize [elasticsearch](http://elasticsearch.org) indices
+molindo-elasticsync-osgi is a simple command line tool to synchronize [elasticsearch](http://elasticsearch.org) indices
 regardless of cluster version. It's built with
 
 - [elasticsearch's Java client API](http://www.elasticsearch.org/guide/reference/java-api/) (`TransportClient`)
 - [Aconex/scrutineer](https://github.com/Aconex/scrutineer)
 - [OSGI](http://en.wikipedia.org/wiki/OSGi)
 
-It's inteded usecase is upgrading/migrating between elasticsearch versions. A migration with molindo-elasticsync
+It's inteded usecase is upgrading/migrating between elasticsearch versions. A migration with molindo-elasticsync-osgi
 follows these steps:
 
 1. create a new cluster
 1. create required indices and mappings
-1. first run of molindo-elasticsync (potentially very slow)
+1. first run of molindo-elasticsync-osgi (potentially very slow)
 1. switch writing from old cluster to new
-1. next run of molindo-elasticsync (fast)
+1. next run of molindo-elasticsync-osgi (fast)
 1. shutdown old cluster
 
-The first run of molindo-elasticsync writes the complete index. There are other (and faster) ways to do this, but
-you might not want to use yet another tool. Consecutive runs of molindo-elasticsync only write changes. Detecting
+The first run of molindo-elasticsync-osgi writes the complete index. There are other (and faster) ways to do this, but
+you might not want to use yet another tool. Consecutive runs of molindo-elasticsync-osgi only write changes. Detecting
 these changes is extemely fast (mainly depending on scan speed). Indexing changes depends on the amount of changes. You
-might therefore want to run molindo-elasticsync just before switching over to the new cluster to minimize
+might therefore want to run molindo-elasticsync-osgi just before switching over to the new cluster to minimize
 incosistencies. Switching writes over to the new cluster and doing a sync afterwards is save due to the versioning.
 Elasticsearch even keeps versions of deleted documents around for some time (`index.gc_deletes`, TODO: verify
 reliability). You should increase this setting to a suitable time before you start the process (available in 0.90.3, see
@@ -33,8 +36,8 @@ OSGI
 ----
 
 I've (ab)used OSGI to support multiple elasticsearch versions on the classpath. Each version comes in it's own
-OSGI bundle (currently [0.20](https://github.com/molindo/molindo-elasticsync/tree/master/at.molindo.elasticsync.es020)
-and [0.90](https://github.com/molindo/molindo-elasticsync/tree/master/at.molindo.elasticsync.es090) supported). It's
+OSGI bundle (currently [0.20](https://github.com/molindo/molindo-elasticsync-osgi/tree/master/at.molindo.elasticsync.es020)
+and [0.90](https://github.com/molindo/molindo-elasticsync-osgi/tree/master/at.molindo.elasticsync.es090) supported). It's
 my first shot at OSGI so please feel let me know if I'm doing things wrong. I know that my elasticsearch bundles 
 contain all dependencies and are therefore not very OSGI-ish but I went this route for sake of simplicity. I don't
 even export elasticsearch API. Additionally, my usage of `ServiceTracker` might not be very smart but I've yet to
@@ -53,7 +56,7 @@ It does this by doing a full index scan (see
 [search-type 'scan'](http://www.elasticsearch.org/guide/reference/api/search/search-type))
 
 The current implementation contains the necessary sources inside the 
-[at.molindo.elasticsync.scrutineer bundle](https://github.com/molindo/molindo-elasticsync/tree/master/at.molindo.elasticsync.scrutineer). 
+[at.molindo.elasticsync.scrutineer bundle](https://github.com/molindo/molindo-elasticsync-osgi/tree/master/at.molindo.elasticsync.scrutineer). 
 I do hope to contribute the required changes in order to use it as a 'regular' dependency though.
 
 Building
@@ -62,17 +65,17 @@ Building
 _(Requires Maven 3 and Java 7)_
 
 ```
-$ git clone https://github.com/molindo/molindo-elasticsync.git
-$ cd molindo-elasticsync
+$ git clone https://github.com/molindo/molindo-elasticsync-osgi.git
+$ cd molindo-elasticsync-osgi
 $ mvn clean package
-$ java -jar at.molindo.elasticsync.launcher/target/molindo-elasticsync-*-full.jar --help
+$ java -jar at.molindo.elasticsync.launcher/target/molindo-elasticsync-osgi-*-full.jar --help
 ``` 
 
 Usage
 ----
 
 ```
-java -jar molindo-elasticsync-*-full.jar --help
+java -jar molindo-elasticsync-osgi-*-full.jar --help
 Usage: at.molindo.elasticsync.launcher.Launcher [options]
   Options:
     --help, -h
@@ -106,7 +109,7 @@ Note that the default is performing a dry-run. Use the `--update` flag to perfor
 
 An example invocation would be:
 
-    java -jar molindo-elasticsync-*-full.jar \
+    java -jar molindo-elasticsync-osgi-*-full.jar \
       --source localhost:9300 --target localhost:9301 \
       --index twitter --type tweet \
       --update
