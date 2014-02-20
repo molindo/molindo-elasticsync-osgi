@@ -3,7 +3,7 @@
 
   <parent>
     <groupId>at.molindo</groupId>
-    <artifactId>molindo-elasticsync</artifactId>
+    <artifactId>molindo-elasticsync-osgi</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
 
